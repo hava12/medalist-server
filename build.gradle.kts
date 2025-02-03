@@ -1,15 +1,15 @@
-// 빌드 시
-buildscript {
-    repositories {
-        mavenCentral()
-    }
+plugins {
+    java
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 allprojects {
-    group = "com.example"
-    version = "1.0-SNAPSHOT"
-
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
 }
-
