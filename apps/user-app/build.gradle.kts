@@ -8,9 +8,10 @@ plugins {
 dependencies {
     implementation(project(":presentation-module"))
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.testcontainers:testcontainers-bom:1.20.2")
-    testImplementation("org.testcontainers:mysql")
-    testImplementation("org.testcontainers:junit-jupiter")
+
+    implementation("org.testcontainers:junit-jupiter")
+    implementation("org.springframework.boot:spring-boot-testcontainers")
+    implementation("org.testcontainers:mysql")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
