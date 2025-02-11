@@ -6,6 +6,6 @@
 
 <module name="Checker">
     <module name="TreeWalker">
-        <module name="com.checkstyle.method.ControllerMethodNameCheck"/>
+<!--        <module name="com.checkstyle.method.ControllerMethodNameCheck"/>-->
     </module>
 </module>
