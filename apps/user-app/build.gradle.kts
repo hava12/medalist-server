@@ -12,6 +12,7 @@ dependencies {
     implementation("org.testcontainers:junit-jupiter")
     implementation("org.springframework.boot:spring-boot-testcontainers")
     implementation("org.testcontainers:mysql")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")

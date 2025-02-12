@@ -1,9 +1,8 @@
 package com.medalist;
 
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest
 public class UserAppApplicationTests {
 
 	@Test
