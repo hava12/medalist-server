@@ -7,12 +7,14 @@ plugins {
 
 dependencies {
     implementation(project(":presentation-module"))
+    implementation(project(":application"))
+    implementation(project(":domain"))
+
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.testcontainers:junit-jupiter")
     implementation("org.springframework.boot:spring-boot-testcontainers")
     implementation("org.testcontainers:mysql")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")

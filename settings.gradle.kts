@@ -11,9 +11,10 @@ module(name=":apps:user-app-module", "apps/user-app")
 module(name=":apps:competition-app-module", "apps/competition-app")
 
 module(name=":common-module", "common")
+module(name=":application", "application")
+module(name=":domain", "domain")
 
 fun module(name: String, path: String) {
     include(name)
     project(name).projectDir = file(path)
 }
-
