@@ -1,0 +1,1 @@
+INSERT INTO medalist.user VALUES ('조동엽', 'aaaa@naver.com', '01011112222')
