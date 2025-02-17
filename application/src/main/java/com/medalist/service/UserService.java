@@ -1,12 +1,19 @@
 package com.medalist.service;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import com.medalist.entity.User;
+import com.medalist.repository.UserJpaRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-	public List<String> getUser() {
-		return List.of("조동엽 1", "조동엽 2");
+	private final UserJpaRepository userJpaRepository;
+
+	public String getUserName() {
+		final User user = userJpaRepository.findById(1L).orElseThrow(() -> new RuntimeException("User not found"));
+		System.out.println(user);
+		return user.getName();
 	}
 }

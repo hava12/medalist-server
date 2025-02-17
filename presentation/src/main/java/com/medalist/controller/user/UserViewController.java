@@ -16,9 +16,9 @@ public class UserViewController {
 	private final UserService userService;
 
 	@GetMapping
-	public ResponseEntity<List<String>> getUserNames() {
+	public ResponseEntity<String> getUserNames() {
 		return ResponseEntity
 			.ok()
-			.body(userService.getUser());
+			.body(userService.getUserName());
 	}
 }

@@ -15,7 +15,7 @@ public class MySqlTestContainerConfig {
 	private static final MySQLContainer<?> mysqlContainer = new MySQLContainer<>("mysql:8.0.28")
 		.withDatabaseName("medalist")
 		.withUsername("root")
-		.withPassword("root");
+		.withPassword("1234");
 
 	static {
 		mysqlContainer.start();
