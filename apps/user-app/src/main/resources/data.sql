@@ -1,7 +1,1 @@
-CREATE TABLE IF NOT EXISTS user (id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    phone VARCHAR(20) NOT NULL
-);
-
-INSERT INTO medalist.user VALUES ('조동엽', 'aaaa@naver.com', '01011112222')
+INSERT INTO user (name, email, mobile_number) VALUES ('조동엽','aaaa@naver.com', '01011112222');
