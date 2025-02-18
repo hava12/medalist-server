@@ -1,9 +1,10 @@
-package com.medalist.service;
+package com.medalist.user.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import com.medalist.entity.User;
 import com.medalist.repository.UserJpaRepository;
+import com.medalist.user.dto.command.UserCreateCommand;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -13,7 +14,10 @@ public class UserService {
 
 	public String getUserName() {
 		final User user = userJpaRepository.findById(1L).orElseThrow(() -> new RuntimeException("User not found"));
-		System.out.println(user);
 		return user.getName();
+	}
+
+	public Void saveUser(UserCreateCommand command) {
+		return null;
 	}
 }
