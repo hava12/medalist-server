@@ -43,7 +43,14 @@ jobs:
           terraform apply -auto-approve
         working-directory: ./terraform
 
-      - name: Deploy JAR to EC2
+      - name: Upload JAR to S3
         run: |
-          scp -i ${{ secrets.SSH_PRIVATE_KEY }} ./build/libs/app.jar ubuntu@${{ secrets.EC2_PUBLIC_IP }}:/home/ubuntu/app.jar
-          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@${{ secrets.EC2_PUBLIC_IP }} "sudo systemctl restart myapp"
+          aws s3 cp ./build/libs/app.jar s3://deploy-s3-medalist/app.jar
+
+      - name: Deploy JAR to EC2 via SSM
+        run: |
+          aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --targets "Key=instanceIds,Values=i-xxxxxxxxxxxxxx" \
+            --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/app.jar /home/ubuntu/app.jar", "sudo systemctl restart myapp"]' \
+            --region ap-northeast-2
