@@ -11,14 +11,9 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
-data "aws_iam_role" "ec2_role" {
-  name = "github-action-role" # 기존 IAM Role 이름
-}
-
-# 기존 IAM Role을 사용하여 Instance Profile 생성
-resource "aws_iam_instance_profile" "existing_instance_profile" {
-  name = "ExistingEC2InstanceProfile"
-  role = data.aws_iam_role.ec2_role.name
+# 기존 IAM Instance Profile 조회
+data "aws_iam_instance_profile" "existing_instance_profile" {
+  name = "ExistingEC2InstanceProfile" # 기존에 AWS에 생성된 IAM Instance Profile 이름
 }
 
 resource "aws_instance" "app_server" {
