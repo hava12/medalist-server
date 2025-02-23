@@ -29,6 +29,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::491085395207:oidc-provider/token.actions.githubusercontent.com
+          role-session-name: GitHubActions
           aws-region: ap-northeast-2
 
       - name: Terraform Init & Apply
