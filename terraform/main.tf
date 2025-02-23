@@ -18,7 +18,7 @@ data "aws_iam_role" "ec2_role" {
 # 기존 IAM Role을 사용하여 Instance Profile 생성
 resource "aws_iam_instance_profile" "existing_instance_profile" {
   name = "ExistingEC2InstanceProfile"
-  role = data.aws_iam_role.existing_role.name
+  role = data.aws_iam_role.ec2_role.name
 }
 
 resource "aws_instance" "app_server" {
