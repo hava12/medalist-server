@@ -12,9 +12,9 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-12345678"  # 원하는 AMI ID (Amazon Linux 2 등)
+  ami           = "ami-075e056c0f3d02523"  # AMI ID (Amazon Linux 2 등)
   instance_type = "t3.micro"
-  key_name      = "my-key"  # EC2 SSH 접속을 위한 키페어 이름
+  key_name      = "ec2-key-pair"  # EC2 SSH 접속을 위한 키페어 이름
   security_groups = [aws_security_group.app_sg.name]  # 보안 그룹 연결
 
   tags = {
@@ -38,7 +38,7 @@ resource "aws_security_group" "app_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # 필요 시 특정 IP로 변경
+    cidr_blocks = ["0.0.0.0/0"]  #  필요 시 특정 IP로 변경
   }
 
   # HTTP 트래픽 허용 (80번 포트)
