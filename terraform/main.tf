@@ -15,7 +15,7 @@ resource "aws_instance" "app_server" {
   ami           = "ami-075e056c0f3d02523"  # AMI ID (Amazon Linux 2 등)
   instance_type = "t3.micro"
   key_name      = "ec2-key-pair"  # EC2 SSH 접속을 위한 키페어 이름
-  security_groups = [aws_security_group.app_sg.name]  # 보안 그룹 연결
+  security_groups = [aws_security_group.app_sg[0].name]  # 보안 그룹 연결
 
   tags = {
     Name = "AppServer"
