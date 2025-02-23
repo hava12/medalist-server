@@ -25,14 +25,18 @@ jobs:
       - name: Build JAR
         run: ./gradlew build
 
-      - name: Check if JAR exists
+      - name: List all files in workspace
         run: |
-          if [ -f "./build/libs/app.jar" ]; then
-            echo "app.jar exists"
-          else
-            echo "app.jar does not exist!"
-            exit 1
-          fi
+          echo "=== 현재 디렉토리 확인 ==="
+          pwd
+          echo "=== 최상위 디렉토리 리스트 ==="
+          ls -lah
+          echo "=== 현재 경로 폴더 구조 확인 ==="
+          ls -lah ./
+          echo "=== build 폴더 구조 확인 ==="
+          ls -lah ./build/
+          echo "=== build/libs 폴더 구조 확인 ==="
+          ls -lah ./build/libs/
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
