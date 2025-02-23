@@ -56,6 +56,10 @@ jobs:
           terraform apply -auto-approve
         working-directory: ./terraform
 
+      - name: check-ssm-agent
+        run: |
+          sudo systemctl status amazon-ssm-agent
+
       - name: Upload JAR to S3
         run: |
           aws s3 cp ./apps/user-app/build/libs/user-app-module.jar s3://deploy-s3-medalist/user-app-module.jar
