@@ -58,12 +58,12 @@ jobs:
 
       - name: Upload JAR to S3
         run: |
-          aws s3 cp ./build/libs/app.jar s3://deploy-s3-medalist/app.jar
+          aws s3 cp ./apps/user-app/build/libs/user-app-module.jar s3://deploy-s3-medalist/user-app-module.jar
 
       - name: Deploy JAR to EC2 via SSM
         run: |
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --targets "Key=instanceIds,Values=i-xxxxxxxxxxxxxx" \
-            --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/app.jar /home/ubuntu/app.jar", "sudo systemctl restart myapp"]' \
+            --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/user-app-module.jar /home/ubuntu/user-app-module.jar", "sudo systemctl restart user-app-module"]' \
             --region ap-northeast-2
