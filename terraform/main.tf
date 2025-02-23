@@ -18,7 +18,7 @@ resource "aws_instance" "app_server" {
 
   # 보안 그룹 설정: 기존 SG가 있으면 그것을 사용, 없으면 새로 생성된 SG 사용
   security_groups = length(data.aws_security_group.existing_sg) > 0 ?
-    [data.aws_security_group.existing_sg.name] :
+    data.aws_security_group.existing_sg.name :
     [aws_security_group.app_sg[0].name]
 
 
