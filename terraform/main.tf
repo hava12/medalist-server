@@ -37,6 +37,7 @@ resource "aws_instance" "app_server" {
               sudo systemctl enable amazon-ssm-agent
               sudo systemctl start amazon-ssm-agent
               EOF
+
 }
 
 # 기존 Security Group이 있는지 확인

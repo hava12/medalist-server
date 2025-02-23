@@ -50,11 +50,11 @@ jobs:
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
 
-      - name: Terraform Init & Apply
-        run: |
-          terraform init
-          terraform apply -auto-approve
-        working-directory: ./terraform
+#      - name: Terraform Init & Apply
+#        run: |
+#          terraform init
+#          terraform apply -auto-approve
+#        working-directory: ./terraform
 
       - name: Check SSM Agent Status on EC2
         run: |
@@ -79,10 +79,9 @@ jobs:
 
       - name: Deploy JAR to EC2 via SSM
         run: |
-          
           # 실행 중인 EC2 인스턴스 가져오기
           INSTANCE_IDS=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=AppServer" "Name=instance-state-name,Values=running" \
+            --filters "Name=tag:Name,Values=user-app-ec2" "Name=instance-state-name,Values=running" \
             --query "Reservations[].Instances[].InstanceId" \
             --output text --region ap-northeast-2)
 
