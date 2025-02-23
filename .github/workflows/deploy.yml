@@ -66,6 +66,12 @@ jobs:
             --filters "Name=tag:Name,Values=AppServer" "Name=instance-state-name,Values=running" \
             --query "Reservations[].Instances[].InstanceId" \
             --output text --region ap-northeast-2)
+          
+          SSM_INSTANCE_IDS=$(aws ssm describe-instance-information \
+            --query "InstanceInformationList[].InstanceId" \
+            --output text --region ap-northeast-2)
+
+          VALID_INSTANCE_IDS=$(echo "$INSTANCE_IDS" | tr '\t' '\n' | grep -Fxf <(echo "$SSM_INSTANCE_IDS" | tr '\t' '\n') | tr '\n' ',' | sed 's/,$//')
 
           if [[ -z "$INSTANCE_IDS" ]]; then
             echo "❌ No running EC2 instance found with tag Name=AppServer"
@@ -76,6 +82,6 @@ jobs:
 
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets Key=instanceIds,Values=$(echo $INSTANCE_IDS | tr ' ' ',') \
+            --targets Key=instanceIds,Values=$VALID_INSTANCE_IDS \
             --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/user-app-module.jar /home/ubuntu/user-app-module.jar", "sudo systemctl restart user-app-module"]' \
             --region ap-northeast-2
