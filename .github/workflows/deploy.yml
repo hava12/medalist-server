@@ -79,6 +79,7 @@ jobs:
           fi
 
           echo "✅ Found EC2 Instance IDs: $INSTANCE_IDS"
+          echo "✅ Found EC2 Valid Instance IDs: $VALID_INSTANCE_IDS"
 
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
