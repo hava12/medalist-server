@@ -11,6 +11,31 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+# IAM Role 생성 (EC2에 SSM 권한 부여)
+resource "aws_iam_role" "ssm_role" {
+  name = "EC2SSMRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+# SSM 및 기본 권한 부여 (EC2가 Systems Manager에 연결 가능하도록 설정)
+resource "aws_iam_policy_attachment" "ssm_policy_attach" {
+  name       = "ssm-policy-attach"
+  roles      = [aws_iam_role.ssm_role.name]
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
 resource "aws_instance" "app_server" {
   ami           = "ami-075e056c0f3d02523"  # AMI ID (Amazon Linux 2 등)
   instance_type = "t3.micro"
@@ -27,6 +52,9 @@ resource "aws_instance" "app_server" {
               #!/bin/bash
               sudo apt update -y
               sudo apt install -y openjdk-17-jdk
+              sudo apt install -y amazon-ssm-agent
+              sudo systemctl enable amazon-ssm-agent
+              sudo systemctl start amazon-ssm-agent
               EOF
 }
 
