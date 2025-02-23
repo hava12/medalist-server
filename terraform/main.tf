@@ -17,9 +17,9 @@ resource "aws_instance" "app_server" {
   key_name      = "ec2-key-pair"  # EC2 SSH 접속을 위한 키페어 이름
 
   # 보안 그룹 설정: 기존 SG가 있으면 그것을 사용, 없으면 새로 생성된 SG 사용
-  security_groups = length(data.aws_security_group.existing_sg) > 0 ?
-    data.aws_security_group.existing_sg.name :
-    [aws_security_group.app_sg[0].name]
+  security_groups = data.aws_security_group.existing_sg.id != "" ?
+    data.aws_security_group.existing_sg.id :
+    [aws_security_group.app_sg[0].id]
 
 
   tags = {
