@@ -62,8 +62,16 @@ jobs:
 
       - name: Deploy JAR to EC2 via SSM
         run: |
+#          aws ssm send-command \
+#            --document-name "AWS-RunShellScript" \
+#            --targets "Key=instanceIds,Values=i-xxxxxxxxxxxxxx" \
+#            --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/user-app-module.jar /home/ubuntu/user-app-module.jar", "sudo systemctl restart user-app-module"]' \
+#            --region ap-northeast-2
+          
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets "Key=instanceIds,Values=i-xxxxxxxxxxxxxx" \
+            --targets "Key=instanceIds,Values=$(aws ec2 describe-instances \
+              --filters "Name=tag:Name,Values=AppServer" 
+              --output text --region ap-northeast-2)" \
             --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/user-app-module.jar /home/ubuntu/user-app-module.jar", "sudo systemctl restart user-app-module"]' \
             --region ap-northeast-2
