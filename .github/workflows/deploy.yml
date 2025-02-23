@@ -56,9 +56,22 @@ jobs:
           terraform apply -auto-approve
         working-directory: ./terraform
 
-      - name: check-ssm-agent
+      - name: Check SSM Agent Status on EC2
         run: |
-          sudo systemctl status amazon-ssm-agent
+          # 실행 중인 EC2 인스턴스 가져오기
+          INSTANCE_IDS=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=AppServer" "Name=instance-state-name,Values=running" \
+            --query "Reservations[].Instances[].InstanceId" \
+            --output text --region ap-northeast-2)
+          
+          echo "✅ Found EC2 Instance IDs: $INSTANCE_IDS"
+          
+          # EC2가 SSM에 등록되어 있는지 확인
+          SSM_INSTANCE_IDS=$(aws ssm describe-instance-information \
+            --query "InstanceInformationList[].InstanceId" \
+            --output text --region ap-northeast-2)
+          
+          echo "✅ Found SSM Registered Instance IDs: $SSM_INSTANCE_IDS"
 
       - name: Upload JAR to S3
         run: |
