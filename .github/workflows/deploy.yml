@@ -77,6 +77,7 @@ jobs:
             --output text --region ap-northeast-2)
 
           echo "✅ Found SSM Registered Instance IDs: $SSM_INSTANCE_IDS"
+          $(echo aws ssm describe-instance-information --region ap-northeast-2)
 
           # EC2 인스턴스 ID와 SSM 등록된 ID 비교
           VALID_INSTANCE_IDS=$(echo "$INSTANCE_IDS" | tr '\t' '\n' | grep -Fxf <(echo "$SSM_INSTANCE_IDS" | tr '\t' '\n') | tr '\n' ',' | sed 's/,$//')
