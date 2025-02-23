@@ -62,27 +62,35 @@ jobs:
 
       - name: Deploy JAR to EC2 via SSM
         run: |
+          
+          # 실행 중인 EC2 인스턴스 가져오기
           INSTANCE_IDS=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=AppServer" "Name=instance-state-name,Values=running" \
             --query "Reservations[].Instances[].InstanceId" \
             --output text --region ap-northeast-2)
-          
+
+          echo "✅ Found EC2 Instance IDs: $INSTANCE_IDS"
+
+          # SSM에 등록된 인스턴스 가져오기
           SSM_INSTANCE_IDS=$(aws ssm describe-instance-information \
             --query "InstanceInformationList[].InstanceId" \
             --output text --region ap-northeast-2)
 
+          echo "✅ Found SSM Registered Instance IDs: $SSM_INSTANCE_IDS"
+
+          # EC2 인스턴스 ID와 SSM 등록된 ID 비교
           VALID_INSTANCE_IDS=$(echo "$INSTANCE_IDS" | tr '\t' '\n' | grep -Fxf <(echo "$SSM_INSTANCE_IDS" | tr '\t' '\n') | tr '\n' ',' | sed 's/,$//')
 
-          if [[ -z "$INSTANCE_IDS" ]]; then
-            echo "❌ No running EC2 instance found with tag Name=AppServer"
+          if [[ -z "$VALID_INSTANCE_IDS" ]]; then
+            echo "❌ No valid EC2 instances found for SSM command execution"
             exit 1
           fi
 
-          echo "✅ Found EC2 Instance IDs: $INSTANCE_IDS"
           echo "✅ Found EC2 Valid Instance IDs: $VALID_INSTANCE_IDS"
 
+          # AWS SSM 명령 실행
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets Key=instanceIds,Values=$VALID_INSTANCE_IDS \
+            --targets "Key=instanceIds,Values=$VALID_INSTANCE_IDS" \
             --parameters 'commands=["aws s3 cp s3://deploy-s3-medalist/user-app-module.jar /home/ubuntu/user-app-module.jar", "sudo systemctl restart user-app-module"]' \
             --region ap-northeast-2
