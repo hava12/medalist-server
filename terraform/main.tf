@@ -11,34 +11,20 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
-# IAM Role 생성 (EC2에 SSM 권한 부여)
-resource "aws_iam_role" "ssm_role" {
-  name = "EC2SSMRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
+data "aws_iam_role" "ec2_role" {
+  name = "github-action-role" # 기존 IAM Role 이름
 }
 
-# SSM 및 기본 권한 부여 (EC2가 Systems Manager에 연결 가능하도록 설정)
-resource "aws_iam_policy_attachment" "ssm_policy_attach" {
-  name       = "ssm-policy-attach"
-  roles      = [aws_iam_role.ssm_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+# 기존 IAM Role을 사용하여 Instance Profile 생성
+resource "aws_iam_instance_profile" "existing_instance_profile" {
+  name = "ExistingEC2InstanceProfile"
+  role = data.aws_iam_role.existing_role.name
 }
 
 resource "aws_instance" "app_server" {
   ami           = "ami-075e056c0f3d02523"  # AMI ID (Amazon Linux 2 등)
   instance_type = "t3.micro"
+  iam_instance_profile = aws_iam_instance_profile.existing_instance_profile.name
   key_name      = "ec2-key-pair"  # EC2 SSH 접속을 위한 키페어 이름
 
   # 보안 그룹 설정: 기존 SG가 있으면 그것을 사용, 없으면 새로 생성된 SG 사용
