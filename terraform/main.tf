@@ -38,7 +38,7 @@ data "aws_security_group" "existing_sg" {
 
 # 존재하면 해당 Security Group을 사용, 없으면 새로 생성
 resource "aws_security_group" "app_sg" {
-  count = length(data.aws_security_group.existing_sg.id) > 0 ? 0 : 1
+  count = length(data.aws_security_group.existing_sg[0].id) > 0 ? 0 : 1
 
   name        = "app-security-group"
   description = "Security group for application server"
