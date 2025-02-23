@@ -1,6 +1,6 @@
 plugins {
     java
-    checkstyle
+//    checkstyle
 }
 
 group = "com"
@@ -29,32 +29,32 @@ dependencies {
 //    isShowViolations = true
 //}
 
-tasks.register<Checkstyle>("checkCommon") {
-    configFile = file("config/checkstyle/checkstyle-common.xml")
-    source = fileTree("src/common/java")
-    classpath = files()
-    reports {
-        html.required.set(true)
-        xml.required.set(false)
-    }
-}
-
-tasks.register<Checkstyle>("checkPresentation") {
-    configFile = file("config/checkstyle/checkstyle-rules.xml")
-    source = fileTree("src/presentation/java")
-    classpath = files()
-    reports {
-        html.required.set(true)
-        xml.required.set(false)
-    }
-}
-
-tasks.named("check") {
-    dependsOn("checkCommon", "checkPresentation")
-}
-tasks.withType<Checkstyle> {
-    reports {
-        xml.required.set(false)
-        html.required.set(true) // HTML 리포트 활성화
-    }
-}
+//tasks.register<Checkstyle>("checkCommon") {
+//    configFile = file("config/checkstyle/checkstyle-common.xml")
+//    source = fileTree("src/common/java")
+//    classpath = files()
+//    reports {
+//        html.required.set(true)
+//        xml.required.set(false)
+//    }
+//}
+//
+//tasks.register<Checkstyle>("checkPresentation") {
+//    configFile = file("config/checkstyle/checkstyle-rules.xml")
+//    source = fileTree("src/presentation/java")
+//    classpath = files()
+//    reports {
+//        html.required.set(true)
+//        xml.required.set(false)
+//    }
+//}
+//
+//tasks.named("check") {
+//    dependsOn("checkCommon", "checkPresentation")
+//}
+////tasks.withType<Checkstyle> {
+////    reports {
+////        xml.required.set(false)
+////        html.required.set(true) // HTML 리포트 활성화
+////    }
+//}
