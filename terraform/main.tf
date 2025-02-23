@@ -28,20 +28,29 @@ resource "aws_instance" "app_server" {
               EOF
 }
 
-# 보안 그룹 (EC2의 인바운드/아웃바운드 트래픽 제어)
+# 기존 Security Group이 있는지 확인
+data "aws_security_group" "existing_sg" {
+  filter {
+    name   = "group-name"
+    values = ["app-security-group"]
+  }
+}
+
+# 존재하면 해당 Security Group을 사용, 없으면 새로 생성
 resource "aws_security_group" "app_sg" {
+  count = length(data.aws_security_group.existing_sg.ids) > 0 ? 0 : 1
+
   name        = "app-security-group"
   description = "Security group for application server"
+  vpc_id      = "vpc-0996c7416f8922952"
 
-  # SSH 접속 허용 (보안을 위해 특정 IP로 제한 가능)
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  #  필요 시 특정 IP로 변경
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # HTTP 트래픽 허용 (80번 포트)
   ingress {
     from_port   = 80
     to_port     = 80
@@ -49,15 +58,6 @@ resource "aws_security_group" "app_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # HTTPS 트래픽 허용 (443번 포트)
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # 모든 아웃바운드 트래픽 허용
   egress {
     from_port   = 0
     to_port     = 0
