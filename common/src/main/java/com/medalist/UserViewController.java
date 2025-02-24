@@ -1,4 +1,4 @@
-package com.medalist.checkstyle;
+package com.medalist;
 
 public class UserViewController {
 
