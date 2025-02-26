@@ -17,6 +17,9 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 }
+tasks.test {
+    useJUnitPlatform() // JUnit 5 테스트 실행을 위해 필요!
+}
 
 tasks.bootJar {
     enabled = false
