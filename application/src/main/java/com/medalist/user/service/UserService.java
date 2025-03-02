@@ -1,8 +1,8 @@
 package com.medalist.user.service;
 
 import org.springframework.stereotype.Service;
-import com.medalist.entity.User;
-import com.medalist.repository.UserJpaRepository;
+import com.medalist.user.entity.User;
+import com.medalist.user.repository.UserJpaRepository;
 import com.medalist.user.dto.command.UserCreateCommand;
 import lombok.RequiredArgsConstructor;
 

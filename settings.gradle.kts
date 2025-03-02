@@ -11,7 +11,7 @@ module(name=":apps:user-app-module", "apps/user-app")
 module(name=":apps:competition-app-module", "apps/competition-app")
 module(name=":apps:chatting-app-module", "apps/chat")
 
-module(name=":common-module", "common")
+module(name=":common", "common")
 module(name=":application", "application")
 module(name=":domain", "domain")
 

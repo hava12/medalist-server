@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":common"))
+
     api("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.hibernate:hibernate-core:6.2.7.Final")
 
