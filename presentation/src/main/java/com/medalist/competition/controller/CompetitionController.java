@@ -17,6 +17,7 @@ public class CompetitionController {
 
 	@GetMapping
 	public ResponseEntity<String> getCompetitionList() {
+
 		return ResponseEntity
 			.ok("");
 	}
