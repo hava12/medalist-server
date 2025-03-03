@@ -3,7 +3,7 @@ spring:
     name: competition
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect

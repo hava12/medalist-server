@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToOne;
 import com.medalist.user.entity.User;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "records")
 @Getter
 public class Records {
 	@Id
@@ -23,7 +23,7 @@ public class Records {
 	private Competition competition;
 
 	@Column
-	private Integer rank;
+	private Integer ranking;
 
 	@Column
 	private Integer score;

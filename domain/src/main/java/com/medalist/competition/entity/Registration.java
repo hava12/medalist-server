@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToOne;
 import com.medalist.user.entity.User;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "registration")
 @Getter
 public class Registration {
 

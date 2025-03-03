@@ -11,7 +11,7 @@ import com.medalist.enums.CompetitionStatus;
 import com.medalist.records.Location;
 import lombok.Getter;
 
-@Entity
+@Entity(name="competition")
 @Getter
 public class Competition {
 

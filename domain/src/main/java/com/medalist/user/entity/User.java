@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "user")
 @Getter
 public class User {
 
