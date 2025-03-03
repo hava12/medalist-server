@@ -1,4 +1,4 @@
-package competition.entity;
+package com.medalist.competition.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

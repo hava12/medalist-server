@@ -1,4 +1,4 @@
-package competition.entity;
+package com.medalist.competition.entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;
@@ -21,9 +21,6 @@ public class Competition {
 
 	@Column(name = "name")
 	private String name;
-
-	@Column(name = "mobile_number")
-	private String mobileNumber;
 
 	@Column(name = "category")
 	private CompetitionCategory category;
