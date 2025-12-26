@@ -11,6 +11,7 @@ public record UserCreateRequest(
 	public UserCreateCommand toCommand() {
 		return UserCreateCommand.builder()
 			.email(email)
+			.email(email)
 			.mobileNumber(mobileNumber)
 			.build();
 	}
